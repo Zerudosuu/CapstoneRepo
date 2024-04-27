@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded())
         {
+            print("PLayer is already on ground");
             forceDirection += Vector3.up * jumpForce;
         }
     }
