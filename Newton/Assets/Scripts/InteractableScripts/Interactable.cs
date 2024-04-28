@@ -7,7 +7,7 @@ public class Interactable : MonoBehaviour
 {
     public enum InteractableType
     {
-        Enemy,
+        NPC,
         Item
     }
 
@@ -44,24 +44,24 @@ public class Interactable : MonoBehaviour
             return;
         }
 
-        // Check for Quest Manager instance (avoid null reference errors)
-        if (QuestManager.Instance != null)
-        {
-            if (QuestManager.Instance.IsItemOnQuestList(name)) // Check quest relevance
-            {
-                print(gameObject.name + " interaction triggered!");
+        // // Check for Quest Manager instance (avoid null reference errors)
+        // if (QuestManager.Instance != null)
+        // {
+        //     if (QuestManager.Instance.IsItemOnQuestList(name)) // Check quest relevance
+        //     {
+        //         print(gameObject.name + " interaction triggered!");
 
-                // Destroy the gameObject after a successful interaction
-                Destroy(gameObject);
-            }
-            else
-            {
-                print(gameObject.name + " is not relevant to your current quest.");
-            }
-        }
-        else
-        {
-            Debug.LogError("QuestManager not found! Ensure it's attached to a GameObject.");
-        }
+        //         // Destroy the gameObject after a successful interaction
+        //         Destroy(gameObject);
+        //     }
+        //     else
+        //     {
+        //         print(gameObject.name + " is not relevant to your current quest.");
+        //     }
+        // }
+        // else
+        // {
+        //     Debug.LogError("QuestManager not found! Ensure it's attached to a GameObject.");
+        // }
     }
 }

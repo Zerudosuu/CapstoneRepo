@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questItems:
   - ItemName: Wood
-    isCollected: 1
+    isCollected: 0
   - ItemName: Iron
     isCollected: 0
   isCompleted: 0
