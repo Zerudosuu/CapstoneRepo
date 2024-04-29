@@ -15,4 +15,11 @@ public class Shape : MonoBehaviour
     {
         canvasRectTransform.DOAnchorPosY(0f, duration);
     }
+
+    public void ExitQuestUI()
+    {
+        canvasRectTransform
+            .DOAnchorPosY(-1090.81f, duration)
+            .OnComplete(() => gameObject.SetActive(false));
+    }
 }
