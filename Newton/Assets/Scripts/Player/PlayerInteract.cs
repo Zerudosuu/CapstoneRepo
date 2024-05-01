@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Common;
+using NodeCanvas.DialogueTrees;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +8,8 @@ public class PlayerInteract : MonoBehaviour
     public float raycastDistance = 10f;
 
     private Interactable interactable;
-    private QuestGiver questGiver;
+    private DialogueActor dialogueActor;
+    public DialogueTreeController dialogue;
 
     public string InteractedObject;
 
@@ -38,9 +36,9 @@ public class PlayerInteract : MonoBehaviour
     {
         if (canInteract)
         {
-            if (questGiver != null) // Check if questGiver is not null
+            if (dialogueActor != null) // Check if questGiver is not null
             {
-                questGiver.OpenQuestWindow();
+                dialogue.StartDialogue();
             }
             else if (interactable != null) // Check if interactable is not null
             {
@@ -60,10 +58,10 @@ public class PlayerInteract : MonoBehaviour
 
             interactable = other.gameObject.GetComponent<Interactable>();
         }
-        else if (other.gameObject.GetComponent<QuestGiver>() != null)
+        else if (other.gameObject.GetComponent<DialogueActor>() != null)
         {
             canInteract = true;
-            questGiver = other.gameObject.GetComponent<QuestGiver>();
+            dialogueActor = other.gameObject.GetComponent<DialogueActor>();
         }
     }
 
@@ -76,7 +74,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else if (other.gameObject.GetComponent<QuestGiver>() != null)
         {
-            questGiver = null;
+            dialogueActor = null;
         }
     }
 }
