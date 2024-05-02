@@ -7,8 +7,9 @@ public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
 
-    public PlayerMovement player;
+    public PlayerQuest player;
 
+    #region GUISection
     public GameObject questWindow;
 
     public GameObject questItemContainer;
@@ -17,6 +18,7 @@ public class QuestGiver : MonoBehaviour
 
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
+    #endregion
 
     public void OpenQuestWindow()
     {
@@ -44,5 +46,15 @@ public class QuestGiver : MonoBehaviour
                 Debug.LogWarning("TextMeshProUGUI component not found on itemNamePrefab.");
             }
         }
+    }
+
+    public void AcceptQuest()
+    {
+        questWindow.SetActive(false);
+        quest.isActive = true;
+
+        //give to player
+        player.quest = quest;
+        quest.questGoal.reqAmount = quest.quest.Count;
     }
 }

@@ -42,7 +42,8 @@ public class PlayerInteract : MonoBehaviour
             }
             else if (interactable != null) // Check if interactable is not null
             {
-                interactable.InteractWithObject(InteractedObject);
+                PlayerQuest playerQuest = GetComponent<PlayerQuest>(); // Assuming PlayerQuest is on the same GameObject
+                interactable.InteractWithObject(playerQuest.quest.quest);
             }
         }
     }

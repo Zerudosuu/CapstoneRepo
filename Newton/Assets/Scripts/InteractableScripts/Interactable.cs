@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,18 +6,14 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public enum InteractableType
-    {
-        NPC,
-        Item
-    }
-
     [SerializeField]
     private TextMeshProUGUI interactText;
-    public InteractableType interactableType;
+
+    PlayerQuest playerQuest;
 
     void Start()
     {
+        playerQuest = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerQuest>();
         interactText.gameObject.SetActive(false);
     }
 
@@ -36,7 +33,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public void InteractWithObject(string name)
+    public void InteractWithObject(List<string> questItems)
     {
         // Check if the gameObject is null (indicating it has been destroyed)
         if (gameObject == null)
@@ -44,24 +41,31 @@ public class Interactable : MonoBehaviour
             return;
         }
 
-        // // Check for Quest Manager instance (avoid null reference errors)
-        // if (QuestManager.Instance != null)
-        // {
-        //     if (QuestManager.Instance.IsItemOnQuestList(name)) // Check quest relevance
-        //     {
-        //         print(gameObject.name + " interaction triggered!");
+        bool objectFound = false; // Flag to indicate if the object is found
 
-        //         // Destroy the gameObject after a successful interaction
-        //         Destroy(gameObject);
-        //     }
-        //     else
-        //     {
-        //         print(gameObject.name + " is not relevant to your current quest.");
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.LogError("QuestManager not found! Ensure it's attached to a GameObject.");
-        // }
+        foreach (string questItem in questItems)
+        {
+            if (questItem == gameObject.name)
+            {
+                objectFound = true; // Set the flag to true
+                print("Object found!");
+
+                if (playerQuest.quest.isActive)
+                {
+                    playerQuest.quest.questGoal.Gathered();
+                    if (playerQuest.quest.questGoal.IsReached())
+                    {
+                        playerQuest.quest.Complete();
+                    }
+                }
+                break; // Exit the loop once the object is found
+            }
+        }
+
+        // Check if the object is not relevant to the current quest and was not found
+        if (!objectFound)
+        {
+            print(gameObject.name + " is not relevant to your current quest.");
+        }
     }
 }

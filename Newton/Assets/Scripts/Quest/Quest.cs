@@ -11,4 +11,11 @@ public class Quest
     public string description;
 
     public List<string> quest;
+
+    public QuestGoal questGoal;
+
+    public void Complete()
+    {
+        isActive = false;
+    }
 }
