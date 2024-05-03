@@ -1,4 +1,5 @@
 using NodeCanvas.DialogueTrees;
+using NodeCanvas.Tasks.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,6 +39,7 @@ public class PlayerInteract : MonoBehaviour
         {
             if (dialogueActor != null) // Check if questGiver is not null
             {
+                transform.LookAt(dialogueActor.transform.position);
                 dialogue.StartDialogue();
             }
             else if (interactable != null) // Check if interactable is not null
@@ -47,6 +49,20 @@ public class PlayerInteract : MonoBehaviour
             }
         }
     }
+
+    // private void LookAt(Transform target) // Ensure target is a Transform
+    // {
+    //     if (target != null)
+    //     {
+    //         Vector3 direction = target.position - transform.position;
+    //         Quaternion lookRotation = Quaternion.LookRotation(direction);
+    //         transform.rotation = Quaternion.Slerp(
+    //             transform.rotation,
+    //             lookRotation,
+    //             Time.deltaTime * 5f
+    //         ); // Smooth look-at (optional)
+    //     }
+    // }
 
     void Update() { }
 
@@ -63,6 +79,7 @@ public class PlayerInteract : MonoBehaviour
         {
             canInteract = true;
             dialogueActor = other.gameObject.GetComponent<DialogueActor>();
+            dialogue = other.gameObject.GetComponent<DialogueTreeController>();
         }
     }
 
@@ -76,6 +93,7 @@ public class PlayerInteract : MonoBehaviour
         else if (other.gameObject.GetComponent<QuestGiver>() != null)
         {
             dialogueActor = null;
+            dialogue = null;
         }
     }
 }

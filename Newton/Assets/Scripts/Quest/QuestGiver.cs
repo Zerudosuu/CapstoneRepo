@@ -7,6 +7,8 @@ public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
 
+    public bool IsActive => quest.isActive;
+
     public PlayerQuest player;
 
     #region GUISection
