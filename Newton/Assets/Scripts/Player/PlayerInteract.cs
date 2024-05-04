@@ -16,6 +16,10 @@ public class PlayerInteract : MonoBehaviour
 
     public bool canInteract = false;
 
+    public bool isInteracting = false;
+
+    Vector3 originalVelocity;
+
     void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -40,12 +44,22 @@ public class PlayerInteract : MonoBehaviour
             if (dialogueActor != null) // Check if questGiver is not null
             {
                 transform.LookAt(dialogueActor.transform.position);
+
                 dialogue.StartDialogue();
             }
             else if (interactable != null) // Check if interactable is not null
             {
                 PlayerQuest playerQuest = GetComponent<PlayerQuest>(); // Assuming PlayerQuest is on the same GameObject
-                interactable.InteractWithObject(playerQuest.quest.quest);
+                if (playerQuest != null)
+                {
+                    interactable.InteractWithObject(playerQuest.quest.quest);
+                }
+                else
+                {
+                    Debug.LogError(
+                        "PlayerQuest component not found on the same GameObject as PlayerInteract."
+                    );
+                }
             }
         }
     }

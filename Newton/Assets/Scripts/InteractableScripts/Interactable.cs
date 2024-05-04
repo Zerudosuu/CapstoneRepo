@@ -50,7 +50,7 @@ public class Interactable : MonoBehaviour
                 objectFound = true; // Set the flag to true
                 print("Object found!");
 
-                if (playerQuest.quest.isActive)
+                if (playerQuest != null && playerQuest.quest.isActive)
                 {
                     playerQuest.quest.questGoal.Gathered();
                     if (playerQuest.quest.questGoal.IsReached())

@@ -31,8 +31,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
 
+    PlayerInteract playerInteract;
+
     void Awake()
     {
+        playerInteract = GetComponent<PlayerInteract>();
         rbody = GetComponent<Rigidbody>();
         inputActions = new PlayerInputActions();
     }
@@ -67,26 +70,29 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        forceDirection +=
-            move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
-        forceDirection +=
-            move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
-
-        // If the player is continuously pressing the button it will not set to Vector3.Zero
-        rbody.AddForce(forceDirection, ForceMode.Impulse);
-        forceDirection = Vector3.zero;
-
-        rbody.useGravity = true;
-
-        Vector3 horizontalVelocity = rbody.velocity;
-        horizontalVelocity.y = 0f;
-        if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+        if (!playerInteract.isInteracting)
         {
-            rbody.velocity =
-                horizontalVelocity.normalized * maxSpeed + Vector3.up * rbody.velocity.y;
-        }
+            forceDirection +=
+                move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
+            forceDirection +=
+                move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
 
-        LookAt();
+            // If the player is continuously pressing the button it will not set to Vector3.Zero
+            rbody.AddForce(forceDirection, ForceMode.Impulse);
+            forceDirection = Vector3.zero;
+
+            rbody.useGravity = true;
+
+            Vector3 horizontalVelocity = rbody.velocity;
+            horizontalVelocity.y = 0f;
+            if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+            {
+                rbody.velocity =
+                    horizontalVelocity.normalized * maxSpeed + Vector3.up * rbody.velocity.y;
+            }
+
+            LookAt();
+        }
     }
 
     private void LookAt()

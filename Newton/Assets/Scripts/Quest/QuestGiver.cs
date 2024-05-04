@@ -8,8 +8,9 @@ public class QuestGiver : MonoBehaviour
     public Quest quest;
 
     public bool IsActive => quest.isActive;
-
     public PlayerQuest player;
+
+    public bool QuestWindowIsOpen = false;
 
     #region GUISection
     public GameObject questWindow;
@@ -52,6 +53,8 @@ public class QuestGiver : MonoBehaviour
 
     public void AcceptQuest()
     {
+        QuestWindowIsOpen = false;
+
         questWindow.SetActive(false);
         quest.isActive = true;
 
