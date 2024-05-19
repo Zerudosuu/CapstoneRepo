@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/AnimStyle.uss?fileID=7433441132597879392&amp;guid=f496210f3819b7345bb6660285d43884&amp;type=3#AnimStyle" />
+    <ui:VisualElement name="Container" style="flex-grow: 0; background-color: rgba(255, 0, 0, 0); width: 100%; height: 100%; transform-origin: right bottom; flex-direction: row; display: flex; align-items: flex-start; justify-content: flex-start; flex-shrink: 0;" />
+    <ui:VisualElement name="TaskBookUI" style="flex-grow: 1; width: 100%; height: 100%; position: absolute;">
+        <ui:VisualElement name="TaskBookContainer" class="TaskBookHide">
+            <ui:Button text="&gt;&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TaskBookButton" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; position: absolute; width: 51px; height: 80px; top: 485px; left: -42px; align-items: center; justify-content: center; flex-wrap: wrap;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="StoreContainer" class="StorContainer" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-wrap: wrap; flex-direction: column;">
+        <ui:VisualElement name="CharacterDetails" style="flex-grow: 0; width: 100%; height: 10%; flex-shrink: 1; border-top-width: 10px; border-right-width: 10px; border-bottom-width: 10px; border-left-width: 10px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
+        <ui:VisualElement name="StoreSubContainer" style="flex-grow: 1; width: 100%; height: 20%; align-items: flex-start; flex-direction: row;">
+            <ui:VisualElement name="StoreLeftPane" class="left-pane-out" style="flex-shrink: 0; flex-grow: 0; width: 70%; border-top-left-radius: 0; background-color: rgb(67, 63, 63); translate: 0 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;">
+                <ui:VisualElement name="Grid" style="flex-grow: 1; width: auto; height: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="StoreRightPane" class="store-right-pane" style="flex-grow: 1; width: 30%; height: 100%; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px; background-color: rgba(154, 72, 72, 0.67); border-bottom-right-radius: 0; border-top-right-radius: 0; flex-shrink: 0; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                <ui:VisualElement name="ItemDetails" class="item-details" style="flex-grow: 1; width: 100%; height: 100%; padding-top: 40px; padding-right: 40px; padding-bottom: 40px; padding-left: 40px; align-items: center; justify-content: center;">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ItemTitle" class="item-title" />
+                    <ui:VisualElement name="ImageHolder" class="image-container" style="flex-grow: 0; width: 300px; height: 300px; flex-shrink: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); -unity-background-scale-mode: scale-to-fit; -unity-slice-scale: 0; margin-bottom: 0; max-width: 300px; max-height: 300px; min-width: 300px; min-height: 300px; flex-wrap: wrap; background-color: rgba(255, 255, 255, 0.15); padding-top: 51px; padding-right: 51px; padding-bottom: 51px; padding-left: 51px;" />
+                    <ui:VisualElement class="item-description-container" style="flex-grow: 1; width: 100%; height: 50%; margin-top: 47px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 9px; border-right-width: 9px; border-bottom-width: 9px; border-left-width: 9px;">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ItemDescription" class="item-description" />
+                    </ui:VisualElement>
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="buyButton" class="buy-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CloseButton" style="position: absolute; width: 100px; height: 100px; align-self: auto; align-items: auto; top: 131px; left: 1804px;" />
+    </ui:VisualElement>
+</ui:UXML>

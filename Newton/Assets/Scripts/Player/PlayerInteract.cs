@@ -61,6 +61,12 @@ public class PlayerInteract : MonoBehaviour
                     );
                 }
             }
+            else
+            {
+                UIController uIController = GameObject.FindObjectOfType<UIController>();
+
+                uIController.OpenStore();
+            }
         }
     }
 
@@ -94,6 +100,11 @@ public class PlayerInteract : MonoBehaviour
             canInteract = true;
             dialogueActor = other.gameObject.GetComponent<DialogueActor>();
             dialogue = other.gameObject.GetComponent<DialogueTreeController>();
+        }
+        else if (other.gameObject.GetComponent<Store>() != null)
+        {
+            canInteract = true;
+            print("hey");
         }
     }
 

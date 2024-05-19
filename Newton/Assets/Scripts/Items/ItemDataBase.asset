@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde5145e13079b84d9d883f4fb9f6109, type: 3}
+  m_Name: ItemDataBase
+  m_EditorClassIdentifier: 
+  items:
+  - itemName: X
+    description: asdasfasda
+    price: 1123
+    itemImage: {fileID: 21300000, guid: d2adf4be30da08641a986dc1a035cbfe, type: 3}
+    itemStatus: 0
+    Quantity: 0
+  - itemName: F
+    description: gasdadasda
+    price: 134
+    itemImage: {fileID: 21300000, guid: 3b9e073ee03f6614898a81df8af9c7ef, type: 3}
+    itemStatus: 0
+    Quantity: 0
+  - itemName: G
+    description: asdadasd
+    price: 12
+    itemImage: {fileID: 21300006, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+    itemStatus: 0
+    Quantity: 0
+  - itemName: Hotdog
+    description: 'hasda '
+    price: 265
+    itemImage: {fileID: 21300014, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+    itemStatus: 0
+    Quantity: 0
+  - itemName: gawadad
+    description: asgasdasda
+    price: 23
+    itemImage: {fileID: 21300014, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+    itemStatus: 0
+    Quantity: 0
+  - itemName: ehehhe
+    description: asagsdawadawda
+    price: 5123
+    itemImage: {fileID: 21300000, guid: eb5037930d3bbe143a8a570722950901, type: 3}
+    itemStatus: 0
+    Quantity: 0
+  - itemName: fasdawf
+    description: 2dasda
+    price: 1231241
+    itemImage: {fileID: 21300002, guid: bad6c0f0bf6c3aa4690d400a757fa284, type: 3}
+    itemStatus: 0
+    Quantity: 0
