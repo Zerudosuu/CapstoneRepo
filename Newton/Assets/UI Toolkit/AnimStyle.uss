@@ -186,3 +186,49 @@
     transition-duration: 0.5s;
     translate: 0 100%;
 }
+
+.tabContent {
+    display: none;
+}
+
+.tabContent.active {
+    display: flex;
+}
+
+.subHeader {
+    letter-spacing: 20px;
+    font-size: 18px;
+}
+
+.Header {
+    font-size: 28px;
+    word-spacing: 0;
+    letter-spacing: 18px;
+}
+
+.QuestWindow {
+    flex-grow: 0;
+    width: 30%;
+    height: 100%;
+    align-self: flex-start;
+    flex-shrink: 0;
+    background-color: rgba(103, 0, 0, 0.65);
+}
+
+/* Root container for the progress bar */
+.progress-bar-container {
+    background-image: url('Assets/GameAssets/Players/Exp Bar.png');
+    background-size: cover;
+    width: 100%;
+    height: 50px; /* Adjust height as needed */
+    border-radius: 10px; /* Optional: For rounded corners */
+}
+
+/* Progress bar fill */
+.progress-bar-fill {
+    background-color: #4CAF50; /* Change this to your desired fill color */
+    width: 0%; /* This will be updated dynamically */
+    height: 100%;
+    border-radius: 10px 0 0 10px; /* Optional: For rounded corners */
+    transition: width 0.3s ease; /* Smooth transition for width change */
+}

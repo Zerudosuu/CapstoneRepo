@@ -9,6 +9,7 @@ public class QuestGoal
 
     public int reqAmount;
     public int curAmount;
+    public bool isCollected;
 
     public bool IsReached()
     {
@@ -19,8 +20,14 @@ public class QuestGoal
     {
         if (goalType == GoalType.Gathering)
         {
-            curAmount += 1;
+            curAmount++;
         }
+    }
+
+    public void ResetGoal()
+    {
+        curAmount = 0;
+        isCollected = false;
     }
 }
 

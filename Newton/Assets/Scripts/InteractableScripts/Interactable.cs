@@ -9,11 +9,8 @@ public class Interactable : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI interactText;
 
-    PlayerQuest playerQuest;
-
     void Start()
     {
-        playerQuest = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerQuest>();
         interactText.gameObject.SetActive(false);
     }
 
@@ -33,7 +30,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public void InteractWithObject(List<string> questItems)
+    public void InteractWithObject(List<QuestRequiredItem> questItems)
     {
         // Check if the gameObject is null (indicating it has been destroyed)
         if (gameObject == null)
@@ -41,24 +38,44 @@ public class Interactable : MonoBehaviour
             return;
         }
 
+        PlayerQuest playerQuest = GameObject.FindAnyObjectByType<PlayerQuest>(); // Assuming PlayerQuest is on the same GameObject
+
+        // Check if playerQuest is not null
+        if (playerQuest == null)
+        {
+            Debug.LogError("PlayerQuest component not found.");
+            return;
+        }
+
+        // Check if there is a current quest
+        if (playerQuest.currentQuest == null)
+        {
+            print("There is no current quest");
+            return;
+        }
+
         bool objectFound = false; // Flag to indicate if the object is found
 
-        foreach (string questItem in questItems)
+        foreach (var questItem in questItems)
         {
-            if (questItem == gameObject.name)
+            if (questItem.ItemName == gameObject.name)
             {
                 objectFound = true; // Set the flag to true
-                print("Object found!");
 
-                if (playerQuest != null && playerQuest.quest.isActive)
+                foreach (var item in playerQuest.currentQuest.QuestRequiredItem)
                 {
-                    playerQuest.quest.questGoal.Gathered();
-                    if (playerQuest.quest.questGoal.IsReached())
+                    if (gameObject.name == item.ItemName)
                     {
-                        playerQuest.quest.Complete();
+                        print("Item found will add current amount");
+                        item.questGoal.Gathered();
+
+                        if (item.questGoal.IsReached())
+                        {
+                            print(item.ItemName + " is Reached!");
+                            item.questGoal.isCollected = true;
+                        }
                     }
                 }
-                break; // Exit the loop once the object is found
             }
         }
 
@@ -66,6 +83,12 @@ public class Interactable : MonoBehaviour
         if (!objectFound)
         {
             print(gameObject.name + " is not relevant to your current quest.");
+        }
+
+        // Check if all items are collected and complete the quest
+        if (playerQuest.currentQuest.AreAllItemsCollected())
+        {
+            playerQuest.currentQuest.Complete();
         }
     }
 }

@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         playerInteract = GetComponent<PlayerInteract>();
         rbody = GetComponent<Rigidbody>();
         inputActions = new PlayerInputActions();
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     #region Subsribe/Unsubscribe/InputActionMethods

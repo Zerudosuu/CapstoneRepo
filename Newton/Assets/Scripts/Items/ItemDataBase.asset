@@ -51,7 +51,14 @@ MonoBehaviour:
     Quantity: 0
   - itemName: fasdawf
     description: 2dasda
-    price: 1231241
+    price: 532
     itemImage: {fileID: 21300002, guid: bad6c0f0bf6c3aa4690d400a757fa284, type: 3}
+    itemStatus: 0
+    Quantity: 0
+  - itemName: asdgiagdia
+    description: 
+    price: 0
+    itemImage: {fileID: -1522864199519269440, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+      type: 3}
     itemStatus: 0
     Quantity: 0

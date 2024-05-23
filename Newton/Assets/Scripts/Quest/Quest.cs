@@ -11,6 +11,11 @@ public class Quest
     public string title;
     public string description;
 
+    public int ExperienceReward;
+    public int CoinReward;
+
+    public int EnergyReward;
+
     public List<string> quest;
 
     public QuestGoal questGoal;

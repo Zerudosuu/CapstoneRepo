@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4251e0fd8b5624a899001d38bcc9a9, type: 3}
+  m_Name: QuizDatabase
+  m_EditorClassIdentifier: 
+  QuizDetails:
+  - level: 0
+    Question: Which gas do living things need to breathe?
+    Answers:
+    - Nitrogen
+    - Oxygen
+    - Hydrogen
+    - Carbon Dioxide
+    CorrectAnswer: 3
+  - level: 0
+    Question: What is the chemical formula for water?
+    Answers:
+    - CO2
+    - O2
+    - H2O
+    - H2SO4
+    CorrectAnswer: 2
+  - level: 0
+    Question: What is the process by which plants make their own food using sunlight?
+    Answers:
+    - Germination
+    - Respiration
+    - Photosynthesis
+    - Transpiration
+    CorrectAnswer: 1
+  - level: 0
+    Question: Which planet is known as the Red Planet?
+    Answers:
+    - Venus
+    - Mars
+    - Earth
+    - Jupiter
+    CorrectAnswer: 0
+  - level: 0
+    Question: Which part of the cell contains the genetic material?
+    Answers:
+    - Nucleus
+    - Cell membrane
+    - Ribosome
+    - Cytoplasm
+    CorrectAnswer: 3

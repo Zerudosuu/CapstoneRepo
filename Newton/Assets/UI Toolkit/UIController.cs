@@ -1,17 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class UIController : MonoBehaviour
 {
+    GameManager gameManager;
+    QuestGiver questGiver;
+
+    public GameObject ArcadeCamera;
     private VisualElement Container;
 
     #region TaskBook
     private VisualElement TaskBookUI;
     private VisualElement TaskBookContainer;
     private Button TaskBookButton;
+
+    private VisualElement TaskBookImage1;
+    private VisualElement TaskBookImage2;
+    private VisualElement tabsbuttoncontainer;
+    private VisualElement tabsContainer;
+
+    private VisualElement tab1;
+    private VisualElement tab2;
+    private VisualElement tab3;
+    private Button tab1Button;
+    private Button tab2Button;
+    private Button tab3Button;
+
+    private VisualTreeAsset QuestItemTemplate;
+
     #endregion
 
     #region StoreUI
@@ -32,22 +53,67 @@ public class UIController : MonoBehaviour
 
     private int selectedItemIndex = 0;
 
+    private Label CoinCount;
+
+    private VisualElement CharacterDetails;
+
     // private Button[] Slot;
     #endregion
 
+
+    #region Arcade
+    VisualElement Arcade;
+    Button PlayGame;
+    #endregion
     [Obsolete]
     void Start()
     {
+        gameManager = GameObject.FindAnyObjectByType<GameManager>();
+        questGiver = GameObject.FindAnyObjectByType<QuestGiver>();
+
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        Container = root.Q<VisualElement>("Container");
-
         #region TaskBookInit
+
+
+
         TaskBookUI = root.Q<VisualElement>("TaskBookUI");
         TaskBookContainer = TaskBookUI.Q<VisualElement>("TaskBookContainer");
         TaskBookButton = TaskBookUI.Q<Button>("TaskBookButton");
-        Container.style.display = DisplayStyle.None;
+        TaskBookImage1 = TaskBookButton.Q<VisualElement>("TaskButtonImage1");
+        TaskBookImage2 = TaskBookButton.Q<VisualElement>("TaskButtonImage2");
+
+        TaskBookUI.style.display = DisplayStyle.None;
+        TaskBookContainer.style.display = DisplayStyle.None;
+
+        TaskBookImage2.style.display = DisplayStyle.None;
+
+        // Container.style.display = DisplayStyle.None;
         TaskBookButton.RegisterCallback<ClickEvent>(ToggleTaskBook);
+
+        tabsbuttoncontainer = TaskBookContainer.Q<VisualElement>(
+            "TaskBookContainerTabButtonContainer"
+        );
+        tab1Button = tabsbuttoncontainer.Q<Button>("Tab1Button");
+        tab2Button = tabsbuttoncontainer.Q<Button>("Tab2Button");
+        tab3Button = tabsbuttoncontainer.Q<Button>("Tab3Button");
+
+        tab1Button.style.display = DisplayStyle.None;
+        tab2Button.style.display = DisplayStyle.None;
+        tab3Button.style.display = DisplayStyle.None;
+
+        tabsContainer = TaskBookContainer.Q<VisualElement>("TasbContentContainer");
+
+        tab1 = tabsContainer.Q<VisualElement>("Quest");
+        tab2 = tabsContainer.Q<VisualElement>("Bag");
+        tab3 = tabsContainer.Q<VisualElement>("RecordBook");
+
+        tab1Button.RegisterCallback<ClickEvent>(evt => ShowTabContent(tab1));
+        tab2Button.RegisterCallback<ClickEvent>(evt => ShowTabContent(tab2));
+        tab3Button.RegisterCallback<ClickEvent>(evt => ShowTabContent(tab3));
+
+        QuestItemTemplate = Resources.Load<VisualTreeAsset>("QuestItem");
+
         #endregion
 
         #region StoreInit
@@ -55,14 +121,16 @@ public class UIController : MonoBehaviour
 
         StoreSubContainer = StoreContainer.Q<VisualElement>("StoreSubContainer");
 
+        CharacterDetails = StoreContainer.Q<VisualElement>("CharacterDetails");
+        // CoinCount = CharacterDetails.Q<Label>("CoinLabel");
+
+        // CoinCount.text = gameManager.Coins.ToString();
+
         rightPane = StoreSubContainer.Q<VisualElement>("StoreRightPane");
 
         leftPane = StoreSubContainer.Q<VisualElement>("StoreLeftPane");
 
         ItemDetails = rightPane.Q<VisualElement>("ItemDetails");
-        // rightPane = StoreContainer.Q<VisualElement>("StoreRightPane");
-        // leftPane = StoreContainer.Q<VisualElement>("StoreLeftPane");
-        // ItemDetails = rightPane.Q<VisualElement>("ItemDetails");
 
         CloseButton = StoreContainer.Q<Button>("CloseButton");
 
@@ -79,6 +147,50 @@ public class UIController : MonoBehaviour
         CloseButton.RegisterCallback<ClickEvent>(CloseStore);
         PopulateSlots();
         #endregion
+
+        #region  ArcadeInit
+        Arcade = root.Q<VisualElement>("MiniGame");
+        PlayGame = Arcade.Q<Button>("PlayGame");
+
+        PlayGame.RegisterCallback<ClickEvent>(PlayMiniGame);
+
+        Arcade.style.display = DisplayStyle.None;
+        ArcadeCamera.SetActive(false);
+        #endregion
+    }
+
+    private void PlayMiniGame(ClickEvent evt)
+    {
+        SceneManager.LoadScene("MiniGames");
+    }
+
+    public void ShowTheTaskBookUI()
+    {
+        TaskBookUI.style.display = DisplayStyle.Flex;
+        TaskBookContainer.style.display = DisplayStyle.Flex;
+    }
+
+    public void EnableCameraArcade()
+    {
+        ArcadeCamera.SetActive(true);
+        StartCoroutine(DelayedDisplayArcade());
+    }
+
+    private IEnumerator DelayedDisplayArcade()
+    {
+        yield return new WaitForSeconds(1.0f); // Replace 1.0f with your desired delay in seconds
+        Arcade.style.display = DisplayStyle.Flex;
+    }
+
+    private void ShowTabContent(VisualElement CurrentTab)
+    {
+        // Hide all tabs
+        tab1.style.display = DisplayStyle.None;
+        tab2.style.display = DisplayStyle.None;
+        tab3.style.display = DisplayStyle.None;
+
+        // Show the selected tab
+        CurrentTab.style.display = DisplayStyle.Flex;
     }
 
     private void BuyItem(ClickEvent evt)
@@ -91,14 +203,6 @@ public class UIController : MonoBehaviour
 
         ItemInfo selectedItem = storeItem.items[selectedItemIndex];
 
-        // Find the GameManager instance
-        GameManager gameManager = FindAnyObjectByType<GameManager>();
-
-        if (gameManager == null)
-        {
-            Debug.LogError("GameManager instance not found.");
-        }
-
         // Check if the player has enough coins
         if (gameManager.Coins < selectedItem.price)
         {
@@ -107,6 +211,8 @@ public class UIController : MonoBehaviour
 
         // Decrease the player's coins by the item's price
         gameManager.DecreaseCoins(selectedItem.price);
+
+        CoinCount.text = gameManager.Coins.ToString();
 
         // Additional logic for handling the purchased item can be added here
         // For example, adding the item to the player's inventory
@@ -147,7 +253,9 @@ public class UIController : MonoBehaviour
             Button itemButton = itemElement.Q<Button>("ItemButton");
             itemButton.userData = i; // Store the index of the item
 
-            itemButton.style.backgroundImage = itemInfo.itemImage.texture;
+            VisualElement itemButtonImageHolder = itemButton.Q<VisualElement>("ButtonImageHolder");
+
+            itemButtonImageHolder.style.backgroundImage = itemInfo.itemImage.texture;
             // Add click event to the item button
             itemButton.RegisterCallback<ClickEvent>(OnSlotClick);
 
@@ -155,6 +263,8 @@ public class UIController : MonoBehaviour
             Grid.Add(itemElement);
         }
     }
+
+    void PopulateQuestSlots() { }
 
     void DisplayItemDetails(int index)
     {
@@ -167,7 +277,6 @@ public class UIController : MonoBehaviour
 
         // Update the right pane with the selected item's details
         itemTitle.text = selectedItem.itemName;
-        itemDescription.text = selectedItem.description;
 
         // Update the image
         imageContainer.Clear();
@@ -184,14 +293,35 @@ public class UIController : MonoBehaviour
         if (TaskBookContainer.ClassListContains("TaskBookIn"))
         {
             TaskBookContainer.RemoveFromClassList("TaskBookIn");
+            tab1Button.style.display = DisplayStyle.None;
+            tab2Button.style.display = DisplayStyle.None;
+            tab3Button.style.display = DisplayStyle.None;
+            TaskBookImage1.style.display = DisplayStyle.Flex;
+            TaskBookImage2.style.display = DisplayStyle.None;
+
             Debug.Log("Click to close");
         }
         else
         {
             TaskBookContainer.AddToClassList("TaskBookIn");
+            tab1Button.style.display = DisplayStyle.Flex;
+            tab2Button.style.display = DisplayStyle.Flex;
+            tab3Button.style.display = DisplayStyle.Flex;
+            TaskBookImage1.style.display = DisplayStyle.None;
+            TaskBookImage2.style.display = DisplayStyle.Flex;
             Debug.Log("Click to open");
         }
     }
 
-    void Update() { }
+    void Update()
+    {
+        if (questGiver.isQuestWindowOpen)
+        {
+            TaskBookUI.style.display = DisplayStyle.None;
+        }
+        else
+        {
+            TaskBookUI.style.display = DisplayStyle.Flex;
+        }
+    }
 }

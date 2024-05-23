@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestTingGrounds.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/MiniGames.unity
+    guid: 33c3fba37255ef24e97df615e0a85d13
+  - enabled: 1
+    path: Assets/Scenes/ExperimentOne.unity
+    guid: 8e7a7391b5654c24caa1b15289c48772
   m_configObjects: {}

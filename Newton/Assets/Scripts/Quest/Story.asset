@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4e09688a479084596963c4f3cf9d8c, type: 3}
+  m_Name: Story
+  m_EditorClassIdentifier: 
+  story:
+  - isCompleted: 1
+    isActive: 1
+    title: Finding Task Book
+    description: Your dad needs your help to find the missing Experimental Task Book.
+      This special book has all the instructions for the experiments you want to
+      do together. Let's find it so you can start your exciting project!
+    ExperienceReward: 0
+    CoinReward: 0
+    EnergyReward: 0
+    QuestRequiredItem:
+    - ItemName: TaskBook
+      ItemQuantity: 1
+      questGoal:
+        goalType: 0
+        reqAmount: 1
+        curAmount: 1
+        isCollected: 1
+  - isCompleted: 1
+    isActive: 1
+    title: ' Sound Box'
+    description: 'In this activity, you should be able to construct a sounding box
+      to. demonstrate how sound is produced and Identify factors that affect the
+      picth and loudness of the sound produced. '
+    ExperienceReward: 0
+    CoinReward: 0
+    EnergyReward: 0
+    QuestRequiredItem:
+    - ItemName: RubberBands
+      ItemQuantity: 1
+      questGoal:
+        goalType: 0
+        reqAmount: 1
+        curAmount: 1
+        isCollected: 1
+    - ItemName: Shoebox
+      ItemQuantity: 1
+      questGoal:
+        goalType: 0
+        reqAmount: 1
+        curAmount: 1
+        isCollected: 1
+    - ItemName: Scissor
+      ItemQuantity: 1
+      questGoal:
+        goalType: 0
+        reqAmount: 1
+        curAmount: 1
+        isCollected: 1

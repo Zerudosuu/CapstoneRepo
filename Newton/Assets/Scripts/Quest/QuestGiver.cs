@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
@@ -10,82 +12,144 @@ public class QuestGiver : MonoBehaviour
 {
     #region  UITOOLKIT
 
-    private VisualElement Container;
-    private VisualElement ObjectToFind;
-    private VisualElement TestContainer;
+    // MainContainer
+    private VisualElement QuestWindowContainer;
 
-    public Label titleText;
-    public Label descriptionText;
+    // QuestWindowContainer
+    private VisualElement QuestWindow;
 
-    private Button AcceptButton;
+    // QuestTitle
+    private Label QuestTitle;
+
+    //QuestDescription
+    private ScrollView QuestDescriptionContainer;
+    private Label QuestDescription;
+
+    // QuestObjectContainer
+    private VisualElement ItemtoFindContainer;
+    private ScrollView ItemsToCollectContainer;
+
+    private VisualElement ObjectContainer;
+
+    //QuestButtons
+    private VisualElement QuestButtonContainer;
+    private Button AcceptQuestButton;
+    private Button DeclineQuestButton;
+
+    private VisualTreeAsset ObjectToCollect;
 
     #endregion
 
-    public Quest quest;
 
-    public bool IsActive => quest.isActive;
     public PlayerQuest player;
 
-    public bool QuestWindowIsOpen = false;
+    public bool isQuestWindowOpen = false;
 
-    #region GUISection
-    public GameObject questWindow;
+    public QuestTree questTree;
+    public int QuestCurrentIndex = 0;
+    public bool IsActive => questTree.story[QuestCurrentIndex].isActive;
 
-    public GameObject questItemContainer;
-
-    public GameObject itemNamePrefab; // Prefab for the item name
-
-    // public TextMeshProUGUI titleText;
-    // public TextMeshProUGUI descriptionText;
-    #endregion
-
-
+    public int requireQuestAmount = 0;
 
     void Start()
     {
         var root = GameObject.FindAnyObjectByType<UIDocument>().rootVisualElement;
 
-        Container = root.Q<VisualElement>("Container");
-        ObjectToFind = root.Q<VisualElement>("ObjectToFind");
-        titleText = root.Q<Label>("TitleText");
-        descriptionText = root.Q<Label>("DescriptionText");
-        TestContainer = root.Q<VisualElement>("TestContainer");
-        Container.style.display = DisplayStyle.None;
+        QuestWindowContainer = root.Q<VisualElement>("QuestWindowContainer");
+        QuestWindow = QuestWindowContainer.Q<VisualElement>("QuestWindow");
+        QuestTitle = QuestWindow.Q<Label>("QuestTitle");
+        QuestDescriptionContainer = QuestWindow.Q<ScrollView>("QuestDescriptionContainer");
+        QuestDescription = QuestDescriptionContainer.Q<Label>("QuestDescription");
+        ItemtoFindContainer = QuestWindow.Q<VisualElement>("ItemtoFindContainer");
+        ItemsToCollectContainer = ItemtoFindContainer.Q<ScrollView>("ItemsToCollectContainer");
+        ObjectContainer = ItemsToCollectContainer.Q<VisualElement>("unity-content-container");
 
-        AcceptButton = root.Q<Button>("AcceptButton");
-        AcceptButton.RegisterCallback<ClickEvent>(AcceptQuest);
+        QuestButtonContainer = QuestWindow.Q<VisualElement>("QuestButtonContainer");
+        AcceptQuestButton = QuestButtonContainer.Q<Button>("ButtonAccept");
+        DeclineQuestButton = QuestButtonContainer.Q<Button>("ButtonDecline");
+
+        ObjectToCollect = Resources.Load<VisualTreeAsset>("QuestItem");
+
+        AcceptQuestButton.RegisterCallback<ClickEvent>(AcceptQuest);
+        DeclineQuestButton.RegisterCallback<ClickEvent>(DeclineQuest);
+
+        QuestWindowContainer.style.display = DisplayStyle.None;
+
+        foreach (var quest in questTree.story)
+        {
+            if (quest.isActive)
+            {
+                quest.ResetQuest();
+
+                for (int i = 0; i < quest.QuestRequiredItem.Count; i++)
+                {
+                    quest.QuestRequiredItem[i].questGoal.ResetGoal();
+                }
+            }
+        }
+
+        // QuestWindow.style.display = DisplayStyle.None;
     }
 
     public void OpenQuestWindow()
     {
-        TestContainer.ToggleInClassList("RightIn");
-        Container.style.display = DisplayStyle.Flex;
-        titleText.text = quest.title;
-        descriptionText.text = "Description: " + quest.description;
+        QuestWindowContainer.style.display = DisplayStyle.Flex;
+        QuestTitle.text = questTree.story[QuestCurrentIndex].title;
+        QuestDescription.text = questTree.story[QuestCurrentIndex].description;
 
-        // Clear existing items in the container
-        ObjectToFind.Clear();
+        isQuestWindowOpen = true;
+        PopulateQuestObjects();
+    }
 
-        // Instantiate Label for each quest item and set text
-        foreach (string questItemText in quest.quest)
+    public void PopulateQuestObjects()
+    {
+        // Ensure container is ready and clear any existing items
+        ItemsToCollectContainer?.Clear();
+
+        // Loop through each quest object
+        for (int i = 0; i < questTree.story[QuestCurrentIndex].QuestRequiredItem.Count; i++)
         {
-            Label newLabel = new Label();
-            newLabel.text = questItemText;
-            ObjectToFind.Add(newLabel);
+            string questObject = questTree.story[QuestCurrentIndex].QuestRequiredItem[i].ItemName;
+
+            // Clone the template to create a new element
+            TemplateContainer itemElement = ObjectToCollect.CloneTree();
+            ;
+
+            // Find and update the Label element
+            Label objectName = itemElement.Query<Label>("QuestItemLabel");
+            objectName.text = questObject;
+
+            // Add the new element to the container
+            ObjectContainer.Add(itemElement);
         }
     }
 
     public void AcceptQuest(ClickEvent evt)
     {
-        TestContainer.ToggleInClassList("RightIn");
-        QuestWindowIsOpen = false;
-
-        quest.isActive = true;
+        questTree.story[QuestCurrentIndex].isActive = true;
 
         //give to player
-        player.quest = quest;
-        quest.questGoal.reqAmount = quest.quest.Count;
+        player.AssignQuest(questTree.story[QuestCurrentIndex]);
 
-        Container.style.display = DisplayStyle.None;
+        foreach (var quest in questTree.story[QuestCurrentIndex].QuestRequiredItem)
+        {
+            requireQuestAmount = quest.ItemQuantity;
+
+            quest.questGoal.reqAmount = requireQuestAmount;
+        }
+
+        print(requireQuestAmount);
+        player.currentQuest.QuestRequiredItem[QuestCurrentIndex].questGoal.reqAmount =
+            requireQuestAmount;
+
+        QuestWindowContainer.style.display = DisplayStyle.None;
+
+        isQuestWindowOpen = false;
+    }
+
+    private void DeclineQuest(ClickEvent evt)
+    {
+        QuestWindowContainer.style.display = DisplayStyle.None;
+        isQuestWindowOpen = false;
     }
 }

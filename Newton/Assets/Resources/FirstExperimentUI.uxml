@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="ElasticString" style="flex-grow: 1; position: absolute; width: 500px; height: 83px; top: 358px; left: 715px; background-color: rgba(161, 145, 145, 0.89); align-items: center; justify-content: center; align-self: center; flex-wrap: wrap; flex-direction: row; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; display: flex;">
+        <ui:Label tabindex="-1" text="Elastic Strings" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 29px;" />
+        <ui:Label tabindex="-1" text="These everyday objects become the musical strings of your instrument." parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-wrap: nowrap; white-space: normal; -unity-text-align: upper-center;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Scissor" style="flex-grow: 1; position: absolute; width: 500px; height: 83px; top: 591px; left: 113px; background-color: rgba(161, 145, 145, 0.89); align-items: center; justify-content: center; align-self: center; flex-wrap: wrap; flex-direction: column; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; display: flex;">
+        <ui:Label tabindex="-1" text="Scissors" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 29px;" />
+        <ui:Label tabindex="-1" text="This can use to cut objects" parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-wrap: nowrap; white-space: normal; -unity-text-align: upper-center;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ShoeBox" style="flex-grow: 1; position: absolute; width: 500px; height: 83px; top: 630px; left: 1388px; background-color: rgba(161, 145, 145, 0.89); align-items: center; justify-content: center; align-self: center; flex-wrap: wrap; flex-direction: column; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; display: flex;">
+        <ui:Label tabindex="-1" text="ShoeBox" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 29px;" />
+        <ui:Label tabindex="-1" text="This unassuming shoebox transforms into the heart of your instrument." parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-wrap: nowrap; white-space: normal; -unity-text-align: upper-center;" />
+    </ui:VisualElement>
+</ui:UXML>

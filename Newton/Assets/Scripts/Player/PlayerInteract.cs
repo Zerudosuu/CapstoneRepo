@@ -18,11 +18,16 @@ public class PlayerInteract : MonoBehaviour
 
     public bool isInteracting = false;
 
+    public bool interactedWithStore;
+    public bool interactingWithArcade;
     Vector3 originalVelocity;
+
+    PlayerQuest playerQuest;
 
     void Awake()
     {
         inputActions = new PlayerInputActions();
+        playerQuest = GetComponent<PlayerQuest>();
     }
 
     void OnEnable()
@@ -49,10 +54,10 @@ public class PlayerInteract : MonoBehaviour
             }
             else if (interactable != null) // Check if interactable is not null
             {
-                PlayerQuest playerQuest = GetComponent<PlayerQuest>(); // Assuming PlayerQuest is on the same GameObject
-                if (playerQuest != null)
+                // Assuming PlayerQuest is on the same GameObject
+                if (playerQuest.currentQuest != null)
                 {
-                    interactable.InteractWithObject(playerQuest.quest.quest);
+                    interactable.InteractWithObject(playerQuest.currentQuest.QuestRequiredItem);
                 }
                 else
                 {
@@ -61,11 +66,16 @@ public class PlayerInteract : MonoBehaviour
                     );
                 }
             }
-            else
+            else if (interactedWithStore)
             {
                 UIController uIController = GameObject.FindObjectOfType<UIController>();
 
                 uIController.OpenStore();
+            }
+            else if (interactingWithArcade)
+            {
+                UIController uIController = GameObject.FindObjectOfType<UIController>();
+                uIController.EnableCameraArcade();
             }
         }
     }
@@ -104,7 +114,13 @@ public class PlayerInteract : MonoBehaviour
         else if (other.gameObject.GetComponent<Store>() != null)
         {
             canInteract = true;
+            interactedWithStore = true;
             print("hey");
+        }
+        else if (other.gameObject.GetComponent<Arcade>() != null)
+        {
+            canInteract = true;
+            interactingWithArcade = true;
         }
     }
 
@@ -119,6 +135,16 @@ public class PlayerInteract : MonoBehaviour
         {
             dialogueActor = null;
             dialogue = null;
+        }
+        else if (other.gameObject.GetComponent<Store>() != null)
+        {
+            interactedWithStore = false;
+            canInteract = false;
+        }
+        else if (other.gameObject.GetComponent<Arcade>() != null)
+        {
+            interactingWithArcade = false;
+            canInteract = false;
         }
     }
 }

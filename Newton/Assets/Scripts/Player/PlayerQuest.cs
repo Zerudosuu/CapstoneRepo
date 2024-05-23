@@ -4,5 +4,14 @@ using UnityEngine;
 
 public class PlayerQuest : MonoBehaviour
 {
-    public Quest quest;
+    public QuestTree quest;
+    public QuestRequirements currentQuest;
+
+    public bool questActive => currentQuest.isCompleted;
+
+    public void AssignQuest(QuestRequirements quest)
+    {
+        currentQuest = quest;
+        Debug.Log("Assigned quest: " + currentQuest.title);
+    }
 }
