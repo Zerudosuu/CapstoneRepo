@@ -13,52 +13,15 @@ MonoBehaviour:
   m_Name: ItemDataBase
   m_EditorClassIdentifier: 
   items:
-  - itemName: X
+  - itemName: Water Bottle
     description: asdasfasda
-    price: 1123
-    itemImage: {fileID: 21300000, guid: d2adf4be30da08641a986dc1a035cbfe, type: 3}
+    price: 10
+    itemImage: {fileID: 21300000, guid: 35eaaf9933b311344b6386f1bee3fc82, type: 3}
     itemStatus: 0
-    Quantity: 0
-  - itemName: F
+    Quantity: 2
+  - itemName: RubberBand
     description: gasdadasda
     price: 134
-    itemImage: {fileID: 21300000, guid: 3b9e073ee03f6614898a81df8af9c7ef, type: 3}
+    itemImage: {fileID: 21300000, guid: d1b4726c7895087438e6cd892f299d1f, type: 3}
     itemStatus: 0
-    Quantity: 0
-  - itemName: G
-    description: asdadasd
-    price: 12
-    itemImage: {fileID: 21300006, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
-    itemStatus: 0
-    Quantity: 0
-  - itemName: Hotdog
-    description: 'hasda '
-    price: 265
-    itemImage: {fileID: 21300014, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
-    itemStatus: 0
-    Quantity: 0
-  - itemName: gawadad
-    description: asgasdasda
-    price: 23
-    itemImage: {fileID: 21300014, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
-    itemStatus: 0
-    Quantity: 0
-  - itemName: ehehhe
-    description: asagsdawadawda
-    price: 5123
-    itemImage: {fileID: 21300000, guid: eb5037930d3bbe143a8a570722950901, type: 3}
-    itemStatus: 0
-    Quantity: 0
-  - itemName: fasdawf
-    description: 2dasda
-    price: 532
-    itemImage: {fileID: 21300002, guid: bad6c0f0bf6c3aa4690d400a757fa284, type: 3}
-    itemStatus: 0
-    Quantity: 0
-  - itemName: asdgiagdia
-    description: 
-    price: 0
-    itemImage: {fileID: -1522864199519269440, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
-      type: 3}
-    itemStatus: 0
-    Quantity: 0
+    Quantity: 23
