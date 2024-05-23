@@ -15,9 +15,9 @@ MonoBehaviour:
   Steps:
   - ObjectToInteract: ShoeBox
     RequiredObject: Scissor
-    RequiredCount: 0
+    RequiredCount: 1
     priorityType: 0
   - ObjectToInteract: ShoeBox
     RequiredObject: ElasticString
-    RequiredCount: 0
+    RequiredCount: 1
     priorityType: 1
